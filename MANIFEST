@@ -1,0 +1,13 @@
+Changes
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+dist.ini
+lib/TheGameCrafter/Client.pm
+lib/TheGameCrafter/Cookbook.pod
+t/01_usage.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/upload.txt
