@@ -1,10 +1,16 @@
 use Test::More;
 use Test::Deep;
 
-use lib '../lib';
+use lib 'lib';
 use 5.010;
+use Ouch;
 
 use_ok 'TheGameCrafter::Client';
+
+# process responses
+my $result = TheGameCrafter::Client::_process_response(HTTP::Response->new(200, 'OK', ['Content-Type' => 'application/json'], '{"result":{"foo":"bar"}}'));
+is $result->{foo}, 'bar', 'process_response()';
+
 
 # get
 is tgc_get('_test')->{method}, 'GET', 'get';
@@ -37,5 +43,13 @@ cmp_deeply
           "path" => "/api/_test"
     },
     'post / upload';
+
+# really bad error
+eval { TheGameCrafter::Client::_process_response(HTTP::Response->new(500, 'ERROR', ['Content-Type' => 'text/plain'], 'fubared')) };
+isa_ok $@, 'Ouch';
+is $@->code, 500, 'parsing error code works';
+is $@->message, 'Server returned unparsable content.', 'parsing error message works';
+is $@->data->{content}, 'fubared', 'parsing error data works';
+
 
 done_testing();
