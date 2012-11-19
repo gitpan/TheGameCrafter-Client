@@ -11,38 +11,44 @@ use_ok 'TheGameCrafter::Client';
 my $result = TheGameCrafter::Client::_process_response(HTTP::Response->new(200, 'OK', ['Content-Type' => 'application/json'], '{"result":{"foo":"bar"}}'));
 is $result->{foo}, 'bar', 'process_response()';
 
+if (LWP::UserAgent->new->is_online) { # skip online tests if we have no online access
 
-# get
-is tgc_get('_test')->{method}, 'GET', 'get';
+    # get
+    is tgc_get('_test')->{method}, 'GET', 'get';
 
-# error
-eval { tgc_get('/api/something/that/does/not/exist') };
-is $@->code, '404', 'error handling works';
+    # error
+    eval { tgc_get('/api/something/that/does/not/exist') };
+    is $@->code, '404', 'error handling works';
 
-# put
-is tgc_put('_test', {foo => 'bar'})->{method}, 'PUT', 'put';
+    # put
+    is tgc_put('_test', {foo => 'bar'})->{method}, 'PUT', 'put';
 
-# delete 
-is tgc_delete('_test', {foo => 'bar'})->{method}, 'DELETE', 'delete';
+    # delete 
+    is tgc_delete('_test', {foo => 'bar'})->{method}, 'DELETE', 'delete';
 
-# post & upload
-cmp_deeply 
-    tgc_post('_test', { file => ['t/upload.txt']}),  
-    {
-          "params" => {
-             "file" => "upload.txt"
-          },    
-          "uploads" => [
-             {
-                "filename" => "upload.txt",
-                "type" => "text/plain",
-                "size" => "13"
-             }
-          ],
-          "method" => "POST",
-          "path" => "/api/_test"
-    },
-    'post / upload';
+    # post & upload
+    cmp_deeply 
+        tgc_post('_test', { file => ['t/upload.txt']}),  
+        {
+              "params" => {
+                 "file" => "upload.txt"
+              },        
+              "uploads" => [
+                 {
+                    "filename" => "upload.txt",
+                    "type" => "text/plain",
+                    "size" => "13"
+                 }
+              ],
+              "method" => "POST",
+              "path" => "/api/_test"
+        },
+        'post / upload';
+} # end skip online tests if we have no online access 
+else {
+    note "Skipping online tests, because we don't appear to have internet access.";
+}
+
 
 # really bad error
 eval { TheGameCrafter::Client::_process_response(HTTP::Response->new(500, 'ERROR', ['Content-Type' => 'text/plain'], 'fubared')) };

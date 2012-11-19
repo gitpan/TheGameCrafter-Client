@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package TheGameCrafter::Client;
 BEGIN {
-  $TheGameCrafter::Client::VERSION = '0.0101';
+  $TheGameCrafter::Client::VERSION = '0.0102';
 }
 
 use LWP::UserAgent;
@@ -20,7 +20,7 @@ TheGameCrafter::Client - A simple client to TGC's web services.
 
 =head1 VERSION
 
-version 0.0101
+version 0.0102
 
 =head1 SYNOPSIS
 
