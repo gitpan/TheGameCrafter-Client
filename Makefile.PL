@@ -22,13 +22,13 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'HTTP::Request::Common' => '0',
     'JSON' => '0',
-    'LWP::UserAgent' => '0',
+    'LWP::UserAgent' => '6.04',
     'Ouch' => '0.0400',
     'Test::Deep' => '0',
     'Test::More' => '0',
     'URI' => '0'
   },
-  'VERSION' => '0.0102',
+  'VERSION' => '0.0103',
   'test' => {
     'TESTS' => 't/*.t'
   }

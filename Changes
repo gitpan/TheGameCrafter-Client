@@ -1,3 +1,7 @@
+0.0103 - November 26, 2012
+ * Trying to figure out why CPAN doesn't like the tests.
+
+
 0.0102 - November 19, 2012
  * Skip tests when we don't have online access.
 

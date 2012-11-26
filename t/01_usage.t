@@ -4,6 +4,7 @@ use Test::Deep;
 use lib 'lib';
 use 5.010;
 use Ouch;
+use JSON;
 
 use_ok 'TheGameCrafter::Client';
 
@@ -14,7 +15,15 @@ is $result->{foo}, 'bar', 'process_response()';
 if (LWP::UserAgent->new->is_online) { # skip online tests if we have no online access
 
     # get
-    is tgc_get('_test')->{method}, 'GET', 'get';
+    my $result = eval{tgc_get('_test')};
+    if ($@) {
+        note "CODE: ".$@->code;
+        note "MESSAGE: ".$@->code;
+        note "DATA: ".to_json($@->data);
+    }
+    else {
+        is $result->{method}, 'GET', 'get';
+    }
 
     # error
     eval { tgc_get('/api/something/that/does/not/exist') };

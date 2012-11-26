@@ -15,7 +15,7 @@ name: TheGameCrafter-Client
 requires:
   HTTP::Request::Common: 0
   JSON: 0
-  LWP::UserAgent: 0
+  LWP::UserAgent: 6.04
   Ouch: 0.0400
   Test::Deep: 0
   Test::More: 0
@@ -23,4 +23,4 @@ requires:
 resources:
   bugtracker: http://github.com/rizen/TheGameCrafter-Client/issues
   repository: git://github.com/rizen/TheGameCrafter-Client.git
-version: 0.0102
+version: 0.0103
